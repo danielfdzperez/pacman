@@ -1,0 +1,14 @@
+           Manual Come-cocos:
+
+El jugador debe comerse todos los cocos para subir de nivel.
+Debe evitar a los fantasmas.
+La partida se acaba cuando el usuario pierde las 3 vidas.
+Consigue puntos por cada coco que se coma.
+	  
+Para maver a pac-man:
+	a - Ir acia la izquierda.
+	d - Ir acia la derecha.
+	s - Ir acia abajo.
+	w - Ir acia arriba.
+Pulse q para salir del juego en cualquier momento.
+
