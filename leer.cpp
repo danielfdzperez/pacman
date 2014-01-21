@@ -4,7 +4,8 @@
 #include <stdlib.h>
 
 int main(){
-  FILE *archivo;
+  FILE *archivo, 
+       *archivo2;
   int numero[11],
       con[11],
       var[11];
@@ -30,8 +31,10 @@ int main(){
      var[con[numeros]] = numero[numeros];
   }//fin for numeros
   //imprime por pantalla los 10 mayores numeros
+  archivo2 = fopen("numero.txt", "w");
   for(int imprime=0; imprime<10; imprime++)
-    printf("%iº \t%i\n", imprime+1, var[imprime]);
+    fprintf(archivo2, "%i \t%i\n", imprime+1, var[imprime]);
+  fclose(archivo2);
 
   return EXIT_SUCCESS;
 }
