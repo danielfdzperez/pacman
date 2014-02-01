@@ -13,6 +13,7 @@
 #define MCOCOS 246//cantidad de cocos que hay
 #define COORDENADAS 2//cantidad de coordenadas que hay x o y
 #define ASTERISCOS 4//cantidad de asteriscos
+#define CANTIDAD_DE_NUMEROS 11//define la cantidad de puntuaciones
 
 enum TipoOpcion {jugar=1, instrucciones, top, salir};
 
@@ -318,7 +319,7 @@ void mover_jugador(char respuesta, char info[FILAS][COLUMNAS], int pos_usuario[U
 	//especifica la nueva ubicacion del usuario
 	pos_usuario [1] = 26;
 	//dibuja al usuario en la nueva ubicacion
-        matriz[pos_usuario[0]][pos_usuario[1]] = 'C';
+	matriz[pos_usuario[0]][pos_usuario[1]] = 'C';
     }//fin if
     //comprueba si el usuario se encuentra en las coordenadas de la parte izquierda del tunel
     if(pos_usuario[0] == 15 && pos_usuario[1] == 27 || pos_usuario[0] == 14 && pos_usuario[1] == 27 
@@ -326,7 +327,7 @@ void mover_jugador(char respuesta, char info[FILAS][COLUMNAS], int pos_usuario[U
 	info[pos_usuario[0]][pos_usuario[1]] = ' ';
 	actualizar_matrices(info, matriz);
 	pos_usuario [1] = 1;
-        matriz[pos_usuario[0]][pos_usuario[1]] = 'C';
+	matriz[pos_usuario[0]][pos_usuario[1]] = 'C';
     }//fin if
 
 
@@ -437,7 +438,7 @@ void mover_maquina(char matriz[FILAS][COLUMNAS], int pos_maquina[ENEMIGOS][2], i
 
 
 				    //genera una direccion aleatoria
-//cambiar de nombre
+				    //cambiar de nombre
 repetir2:
 				    respuesta = rand() % 4;
 				    switch(respuesta){
@@ -574,7 +575,7 @@ repetir2:
 
 
 				    //genera una direccion aleatoria
-//cambiar nombre
+				    //cambiar nombre
 repetir:
 				    respuesta = rand() % 4;
 				    switch(respuesta){
@@ -661,15 +662,53 @@ void comprobacion(char matriz[FILAS][COLUMNAS],  char info[FILAS][COLUMNAS], int
 	    }
 }// fin comprobacion
 
-//guarda la puntuacion en un fichero
+//guarda y ordena la puntuacion
 void guardar_puntuacion(int puntuacion){
-    FILE *archivo;
-
-    archivo = fopen("puntuaciones.txt","a");
-
-    fprintf(archivo, " %i\n", puntuacion);
+    FILE *archivo,
+	 *archivo2;
+    int numero[CANTIDAD_DE_NUMEROS],
+	temporal;
+    //abre el flujo de datos
+    archivo = fopen ("puntuaciones.txt", "r");
+    //recoge todas las puntuaciones
+    //si no existe el archivo lo crea
+    if(archivo == NULL){
+	//crea y abre el archivo para su escritura
+	archivo = fopen ("puntuaciones.txt", "w+");
+	for(int imprime=0; imprime<10; imprime++)
+	    //lo inicializa a cero todas las puntuaciones
+	    fprintf(archivo, "%i \t0\n", imprime+1);
+	//cierra el flujo
+	fclose(archivo);
+	//abre un flujo para la lectura del archivo
+	archivo = fopen ("puntuaciones.txt", "r");
+    }
+    //recoje todas las puntuaciones
+    for(int pasada=0; pasada<10; pasada++)
+	fscanf(archivo, " %*i %i", &numero[pasada]);
+    //se cierra el flujo
     fclose(archivo);
 
+    //se almacena la puntuacion del usuario
+    numero[10] = puntuacion;
+
+    //ordena los numeros de mayor a menor
+    for(int mayor=CANTIDAD_DE_NUMEROS; mayor>=0; mayor--){
+	for (int menor=mayor-1; menor>=0;
+		menor--){
+	    if(numero[mayor] > numero[menor]){
+		temporal = numero[menor];
+		numero[menor] = numero[mayor];
+		numero[mayor] = temporal;
+
+	    }//fin if
+	}//fin for menor
+    }//fin for mayor
+    //guarda las 10 mejores puntuaciones
+    archivo2 = fopen("puntuaciones.txt", "w");
+    for(int menor=0; menor<CANTIDAD_DE_NUMEROS-1; menor++)
+	fprintf(archivo2, "%i \t%i\n", menor+1, numero[menor]);
+    fclose(archivo2);
 }//fin guardar_puntuacion
 
 //comprueba si el usuario se ha comido un asterisco.
