@@ -1,4 +1,4 @@
-/*Comecocos 12 actual*/
+/*Comecocos 12 estable*/
 
 #include <stdio.h>
 #include <stdlib.h>
