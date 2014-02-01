@@ -662,6 +662,7 @@ void comprobacion(char matriz[FILAS][COLUMNAS],  char info[FILAS][COLUMNAS], int
 	    }
 }// fin comprobacion
 
+/*MEJORAR*/
 //guarda y ordena la puntuacion
 void guardar_puntuacion(int puntuacion){
     FILE *archivo,
