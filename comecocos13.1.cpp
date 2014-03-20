@@ -48,13 +48,13 @@ void manual(){
     char caracter,
 	 salir;
 
-    system("clear");
-
+    clear();
     archivo = fopen("manual.txt","r");
 
     if (archivo == NULL){
 
 	printw("\nEl archivo manual.txt no existe\n\n");
+	refresh();
     }
     else{
 
@@ -67,7 +67,8 @@ void manual(){
 
     }
     printw("Pulse enter para continuar\n");
-    salir = getchar();
+    refresh();
+    salir = getch();
 }//fin manual
 
 //muestra las puntuaciones.
