@@ -30,7 +30,7 @@ enum TipoOpcion menu(){
     printw("\tSu opcion: ");
     refresh();
     scanf(" %i", &opcion);
-    //__fpurge(stdin);
+    __fpurge(stdin);
     return (enum TipoOpcion) opcion;
 }
 
